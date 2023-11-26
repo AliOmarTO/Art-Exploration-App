@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Navbar, Container, Nav, Form, Button, NavDropdown } from 'react-bootstrap'
 import { useAtom } from 'jotai'
 import { searchHistoryAtom } from '@/store'
+import { addToHistory } from '@/lib/userData'
 
 export default function MainNav() {
     const router = useRouter()
@@ -11,9 +12,9 @@ export default function MainNav() {
     const [isExpanded, setIsExpanded] = useState(false)
     const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom)
 
-    function submitForm(e) {
+    async function submitForm(e) {
         e.preventDefault() // prevent the browser from automatically submitting the form
-        setSearchHistory((current) => [...current, `title=true&q=${search}`])
+        setSearchHistory(await addToHistory(`title=true&q=${search}`))
         router.push(`/artwork?title=true&q=${search}`)
         setIsExpanded(false)
     }
