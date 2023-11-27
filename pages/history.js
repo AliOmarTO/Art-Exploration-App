@@ -4,12 +4,14 @@ import { useAtom } from 'jotai'
 import { searchHistoryAtom } from '@/store'
 import styles from '@/styles/History.module.css'
 import { setLazyProp } from 'next/dist/server/api-utils'
+import { removeFromHistory } from '@/lib/userData'
 
 export default function History() {
     const router = useRouter()
     const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom)
     let parsedHistory = []
     console.log(searchHistory)
+    if (!searchHistory) return null
 
     searchHistory.forEach((h) => {
         let params = new URLSearchParams(h)
@@ -21,13 +23,9 @@ export default function History() {
         router.push(`/artwork?${searchHistory[index]}`)
     }
 
-    function removeHistoryClicked(e, index) {
+    async function removeHistoryClicked(e, index) {
         e.stopPropagation()
-        setSearchHistory((current) => {
-            let x = [...current]
-            x.splice(index, 1)
-            return x
-        })
+        setSearchHistory(await removeFromHistory(searchHistory[index]))
     }
 
     return (

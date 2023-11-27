@@ -5,12 +5,19 @@ import { Navbar, Container, Nav, Form, Button, NavDropdown } from 'react-bootstr
 import { useAtom } from 'jotai'
 import { searchHistoryAtom } from '@/store'
 import { addToHistory } from '@/lib/userData'
+import { getToken, readToken, removeToken } from '@/lib/authenticate'
 
 export default function MainNav() {
     const router = useRouter()
     const [search, setSearch] = useState('')
     const [isExpanded, setIsExpanded] = useState(false)
     const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom)
+    let token = readToken()
+
+    function logout() {
+        removeToken()
+        router.push('/')
+    }
 
     async function submitForm(e) {
         e.preventDefault() // prevent the browser from automatically submitting the form
@@ -22,7 +29,7 @@ export default function MainNav() {
         <>
             <Navbar expanded={isExpanded} expand="lg" className="bg-body-tertiary  fixed-top">
                 <Container>
-                    <Navbar.Brand>Ali Omar</Navbar.Brand>
+                    <Navbar.Brand>Ali Omar {token && <>- Welcome {token.userName}</>}</Navbar.Brand>
                     <Navbar.Toggle
                         onClick={() => {
                             setIsExpanded(!isExpanded)
@@ -72,6 +79,14 @@ export default function MainNav() {
                                         </NavDropdown.Item>
                                     </Link>
                                 </NavDropdown>
+                            </Nav>
+                            <Nav className="ml-auto">
+                                {!token && (
+                                    <Link href="/login" passHref legacyBehavior>
+                                        <Nav.Link>Login</Nav.Link>
+                                    </Link>
+                                )}
+                                {token && <Nav.Link onClick={logout}>Logout</Nav.Link>}
                             </Nav>
                         </Nav>
                     </Navbar.Collapse>
