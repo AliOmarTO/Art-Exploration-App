@@ -1,12 +1,15 @@
 /*********************************************************************************
- *  WEB422 – Assignment 4
- *  I declare that this assignment is my own work in accordance with Seneca Academic Policy.
- *  No part of this assignment has been copied manually or electronically from any other source
- *  (including web sites) or distributed to other students.
+ *  WEB422 – Assignment 06
+ *  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part of this
+ *  assignment has been copied manually or electronically from any other source (including web sites) or
+ *  distributed to other students.
  *
- *  Name: Ali Omar Student ID: 150648210 Date: 11/2/2023
+ *  Name: Ali Omar Student ID: 150648210 Date: 11/27/2023
+ *
+ *  Vercel App (Deployed) Link: https://web422-lab6.vercel.app/
  *
  ********************************************************************************/
+
 import MainNav from '@/components/MainNav'
 import { Image, Row, Col } from 'react-bootstrap'
 
